@@ -216,7 +216,7 @@
 
                             {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.country.after') !!}
 
-                            <x-shop::form.control-group>
+                            <!-- <x-shop::form.control-group>
                                 <x-shop::form.control-group.label class="!mt-[0px] required">
                                     @lang('shop::app.checkout.onepage.addresses.billing.state')
                                 </x-shop::form.control-group.label>
@@ -234,41 +234,41 @@
 
                                 <x-shop::form.control-group.error control-name="billing[state]">
                                 </x-shop::form.control-group.error>
-                            </x-shop::form.control-group>
+                            </x-shop::form.control-group> -->
 
-                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.state.after') !!}
+                            <!-- {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.state.after') !!} -->
 
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-x-[20px]">
                             <x-shop::form.control-group>
                                 <x-shop::form.control-group.label class="!mt-[0px] required">
                                     Provinsi
                                 </x-shop::form.control-group.label>
-
+    
                                 <x-shop::form.control-group.control type="select" 
-                                name="billing[provinsi]" class="py-2 mb-2" 
+                                name="billing[]" class="py-2 mb-2" 
                                 rules="required" 
-                                :label="trans('shop::app.checkout.onepage.addresses.billing.provinsi')" 
-                                :placeholder="trans('shop::app.checkout.onepage.addresses.billing.provinsi')" 
-                                v-model="forms.billing.address.provinsi" 
+                                :label="trans('shop::app.checkout.onepage.addresses.billing.state')" 
+                                :placeholder="trans('shop::app.checkout.onepage.addresses.billing.state')" 
+                                v-model="forms.billing.address.state" 
                                 @change="getSelectedProvinceId($event.target.value)">
                                     <option v-for="provinsi in provinsi" :value="provinsi.province_id" v-text="provinsi.province">
                                     </option>
                                 </x-shop::form.control-group.control>
-
-                                <x-shop::form.control-group.error control-name="billing[provinsi]">
+    
+                                <x-shop::form.control-group.error control-name="billing[state]">
                                 </x-shop::form.control-group.error>
                             </x-shop::form.control-group>
+    
+                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.state') !!}
+                        </div>
 
-                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.provinsi') !!}
+                        <div class="grid grid-cols-2 gap-x-[20px]">
                             <x-shop::form.control-group>
                                 <x-shop::form.control-group.label class="!mt-[0px] required">
                                     Kota
                                 </x-shop::form.control-group.label>
 
                                 <x-shop::form.control-group.control type="select" name="billing[city]" class="py-2 mb-2" rules="required" :label="trans('shop::app.checkout.onepage.addresses.billing.city')" :placeholder="trans('shop::app.checkout.onepage.addresses.billing.city')" v-model="forms.billing.address.city">
-                                    <option v-for="city in kota" :value="`${city.city_id}-${city.city_name}`" v-text=" city.city_name">
+                                    <option v-for="city in kota" :value="`${city.city_name}`" v-text=" city.city_name">
                                     </option>
                                 </x-shop::form.control-group.control>
 
