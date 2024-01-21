@@ -24,14 +24,33 @@ class Shipping
         if (! Cart::getCart()) {
             return false;
         }
-
+    
         $this->removeAllShippingRates();
+        $kurir = Cart::getCart()->billing_address->kurir;
+        $allowedShippingMethods = [];
+        if($kurir == 'jne'){
 
+            $allowedShippingMethods = ['jneekonomi', 'jneregular', 'jnespeed', 'jneyes']; // Ganti dengan daftar kode yang diizinkan
+        }elseif($kurir == 'pos'){
+            $allowedShippingMethods = ['possatu', 'posdua']; // Ganti dengan daftar kode yang diizinkan
+            
+        }elseif($kurir == 'tiki'){
+            $allowedShippingMethods = ['tikisatu', 'tikidua', 'tikitiga']; // Ganti dengan daftar kode yang diizinkan
+
+        }
+    
         $ratesList = [];
-
+    
         foreach (Config::get('carriers') as $shippingMethod) {
             $object = new $shippingMethod['class'];
-
+    
+            // Check if the method code is allowed based on the conditions
+            if (
+                !in_array($object->getCode(), $allowedShippingMethods)
+            ) {
+                continue;
+            }
+    
             if ($rates = $object->calculate()) {
                 if (is_array($rates)) {
                     $ratesList[] = $rates;
@@ -40,15 +59,16 @@ class Shipping
                 }
             }
         }
-
+    
         $this->rates = array_merge(...$ratesList);
-
+    
         $this->saveAllShippingRates();
-
+    
         return [
             'shippingMethods' => $this->getGroupedAllShippingRates(),
         ];
     }
+    
 
     /**
      * Remove all shipping rates.
@@ -104,6 +124,7 @@ class Shipping
         foreach ($this->rates as $rate) {
             if (! isset($rates[$rate->carrier])) {
                 $rates[$rate->carrier] = [
+                    'icon'          => Config::get('carriers.'.$rate->carrier.'.icon'),
                     'carrier_title' => $rate->carrier_title,
                     'rates'         => [],
                 ];
@@ -124,14 +145,17 @@ class Shipping
     public function getShippingMethods()
     {
         $methods = [];
-
+    
         foreach (Config::get('carriers') as $shippingMethod) {
             $object = new $shippingMethod['class'];
 
             if (! $object->isAvailable()) {
                 continue;
             }
-
+            
+           
+    
+          
             $methods[] = [
                 'code'         => $object->getCode(),
                 'method'       => $object->getMethod(),
