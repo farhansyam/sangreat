@@ -15,18 +15,20 @@
                 <x-shop::shimmer.checkout.onepage.shipping-method/>
             </template>
 
-            <template v-if="isShowShippingMethod">
+            <template v-if="isShowShippingMethod" @change="show">
                 <x-shop::accordion>
                     <x-slot:header>
                         <div class="flex justify-between items-center">
-                            <h2 class="text-[26px] font-medium max-sm:text-[20px]">
+                            <h2 class="text-[26px] font-medium max-sm:text-[20px]" @click="coba">
                                 @lang('shop::app.checkout.onepage.shipping.shipping-method')
                             </h2>
                         </div>
                     </x-slot:header>
 
                     <x-slot:content>
+                        <div v-if="jumlahObject > 0">
                         <div class="flex flex-wrap gap-[30px] mt-[30px]">
+                           
                             <div
                                 class="relative max-w-[218px] max-sm:max-w-full max-sm:flex-auto select-none"
                                 v-for="shippingMethod in shippingMethods"
@@ -34,7 +36,8 @@
 
                                 {!! view_render_event('bagisto.shop.checkout.shipping-method.before') !!}
 
-                                <div v-for="rate in shippingMethod.rates">
+
+                                <div v-for="rate in shippingMethod.rates" >
                                     <input 
                                         type="radio"
                                         name="shipping_method"
@@ -54,7 +57,8 @@
                                         class="block p-[20px] border border-[#E9E9E9] rounded-[12px] cursor-pointer"
                                         :for="rate.method"
                                     >
-                                        <span class="icon-flate-rate text-[60px] text-navyBlue"></span>
+                                    <img v-if="shippingMethod.icon" :src="shippingMethod.icon" alt="Flat Rate Icon" class="your-image-styles" />
+                                <span v-else class="text-[60px] text-navyBlue icon-flate-rate"></span>
 
                                         <p class="text-[25px] mt-[5px] font-semibold max-sm:text-[20px]">
                                             @{{ rate.base_formatted_price }}
@@ -65,10 +69,15 @@
                                         </p>
                                     </label>
                                 </div>
-
+                                </div>
+                                
                                 {!! view_render_event('bagisto.shop.checkout.shipping-method.after') !!}
-
+                                
                             </div>
+                        </div>
+                        <div v-else>
+                        <p>No shipping methods available. please select again</p>
+                            <!-- You can customize this message according to your needs -->
                         </div>
                     </x-slot:content>
                 </x-shop::accordion>
@@ -88,8 +97,25 @@
 
                     isShippingMethodLoading: false,
                 }
+            }, 
+            watch: {
+                isShowShippingMethod(newValue) {
+                if (newValue) {
+                    this.show();
+                }
+                },
+                jumlahObject(newValue) {
+                if (newValue > 0) {
+                   
+                    console.log("jumlahObject is greater than 0!");
+                }
+                },
             },
-
+            created() {
+                
+                
+                
+            },
             methods: {
                 store(selectedShippingMethod) {
                     this.$parent.$refs.vCartSummary.canPlaceOrder = false;
@@ -112,6 +138,16 @@
                         })
                         .catch(error => {});
                 },
+               show(){
+                console.log(this.shippingMethods);
+                this.jumlahObject = Object.keys(this.shippingMethods).length;
+
+                console.log(this.jumlahObject); 
+
+
+               }
+                    
+                
             },
         });
     </script>
