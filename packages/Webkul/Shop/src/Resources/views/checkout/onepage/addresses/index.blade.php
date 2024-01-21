@@ -31,7 +31,7 @@
             return {
                 forms: {
                     billing: {
-                        address: {
+                        address: {  
                             address1: [''],
 
                             isSaved: false,
@@ -58,16 +58,19 @@
                 countries: [],
 
                 states: [],
-
+                //city_id: [],
+            
                 isAddressLoading: true,
 
                 isCustomer: "{{ auth()->guard('customer')->check() }}",
 
                 isTempAddress: false,
             }
+
         },
 
         created() {
+            console.log('Addresses:', this.addresses);
             this.getCustomerAddresses();
 
             this.getCountryStates();
@@ -75,9 +78,22 @@
             this.getCountries();
             this.getProvinsi();
             // this.getCost();
+            this.handleCityChange();
+            
         },
 
         methods: {
+            handleCityChange(event) {
+                if (event && event.target) {
+            
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const selectedCityId = selectedOption.getAttribute('data-city-id');
+                    this.forms.billing.address.city_id = selectedCityId;
+        }},
+
+                // Update city_id in forms.billing.address
+
+       
             resetBillingAddressForm() {
                 this.forms.billing.address = {
                     address1: [''],
@@ -139,13 +155,25 @@
             getProvinsi() {
                 this.$axios.get("{{ route('shop.api.core.provinsi') }}")
                     .then(response => {
-                        this.provinsi = response.data.provinsi;
+                        this.provinces = response.data.provinsi;
                     })
                     .catch(function(error) {});
             },
-            getSelectedProvinceId(provinceId) {
+            getSelectedProvinceId(event) {
                 // Panggil fungsi getCities dan teruskan provinceId yang dipilih
-                this.getCities(provinceId);
+                if (event && event.target) {
+            
+                    this.getCities(event.target.value);
+                    
+                
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const selectedProvinceName = selectedOption.getAttribute('data-province-name');
+                    this.forms.billing.address.state = selectedProvinceName;
+                    //console.log(selectedProvinceName);
+                    
+                }
+
+
             },
             getCities(provinceId) {
                 // Lakukan permintaan ke API dengan provinceId
@@ -237,6 +265,7 @@
             },
 
             store() {
+                
                 if (this.haveStockableItems) {
                     this.$parent.$refs.vShippingMethod.isShowShippingMethod = false;
 
@@ -279,11 +308,13 @@
                             this.forms.billing.address_id
                         ) {
                             this.getCustomerAddresses();
+                            
                         }
                     })
                     .catch(error => {
                         console.log(error);
                     });
+                    
             },
 
             haveStates(addressType) {

@@ -41,6 +41,7 @@
                                     </template>
 
                                     @{{ address.city }},
+
                                     @{{ address.state }}, @{{ address.country }},
                                     @{{ address.postcode }}
                                 </p>
@@ -244,13 +245,13 @@
                                 </x-shop::form.control-group.label>
     
                                 <x-shop::form.control-group.control type="select" 
-                                name="billing[]" class="py-2 mb-2" 
+                                name="billing[state]" class="py-2 mb-2" 
                                 rules="required" 
                                 :label="trans('shop::app.checkout.onepage.addresses.billing.state')" 
                                 :placeholder="trans('shop::app.checkout.onepage.addresses.billing.state')" 
-                                v-model="forms.billing.address.state" 
-                                @change="getSelectedProvinceId($event.target.value)">
-                                    <option v-for="provinsi in provinsi" :value="provinsi.province_id" v-text="provinsi.province">
+                                
+                                @change="getSelectedProvinceId">
+                                    <option v-for="provinsi in provinces" :value="`${provinsi.province_id}`" v-text="`${provinsi.province}`"  :data-province-name="`${provinsi.province}`" :key="`${provinsi.province_id}`">
                                     </option>
                                 </x-shop::form.control-group.control>
     
@@ -258,7 +259,7 @@
                                 </x-shop::form.control-group.error>
                             </x-shop::form.control-group>
     
-                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.state') !!}
+                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.state.after') !!}
                         </div>
 
                         <div class="grid grid-cols-2 gap-x-[20px]">
@@ -267,16 +268,18 @@
                                     Kota
                                 </x-shop::form.control-group.label>
 
-                                <x-shop::form.control-group.control type="select" name="billing[city]" class="py-2 mb-2" rules="required" :label="trans('shop::app.checkout.onepage.addresses.billing.city')" :placeholder="trans('shop::app.checkout.onepage.addresses.billing.city')" v-model="forms.billing.address.city">
-                                    <option v-for="city in kota" :value="`${city.city_name}`" v-text=" city.city_name">
+                                <x-shop::form.control-group.control type="select" name="billing[city]" class="py-2 mb-2" rules="required" :label="trans('shop::app.checkout.onepage.addresses.billing.city')" :placeholder="trans('shop::app.checkout.onepage.addresses.billing.city')" v-model="forms.billing.address.city"
+                                @change="handleCityChange">
+                                    <option v-for="city in kota" :value="`${city.city_name}`" :data-city-id="`${city.city_id}`" :key="`${city.city_id}`"  v-text="`${city.city_name}`">
                                     </option>
                                 </x-shop::form.control-group.control>
 
                                 <x-shop::form.control-group.error control-name="billing[city]">
                                 </x-shop::form.control-group.error>
                             </x-shop::form.control-group>
+                           
 
-                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.city') !!}
+                            {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.city.after') !!}
 
                             <x-shop::form.control-group>
                                 <x-shop::form.control-group.label class="!mt-[0px] required">
@@ -307,6 +310,22 @@
                         </x-shop::form.control-group>
 
                         {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.phone.after') !!}
+                        <x-shop::form.control-group>
+                            <x-shop::form.control-group.label class="!mt-[0px] required">
+                                Kurir
+                            </x-shop::form.control-group.label>
+
+                            <x-shop::form.control-group.control type="select" name="billing[kurir]" rules="required"  v-model="forms.billing.address.kurir" >
+                                <option :value="'jne'">JNE</option>
+                                <option :value="'pos'">POS</option>
+                                <option :value="'tiki'">TIKI</option>
+                            </x-shop::form.control-group.control>
+
+                            <x-shop::form.control-group.error control-name="billing[kurir]">
+                            </x-shop::form.control-group.error>
+                        </x-shop::form.control-group>
+
+                        {!! view_render_event('bagisto.shop.checkout.onepage.billing_address.kurir.after') !!}
 
                         <div class="mt-[30px] pb-[15px]">
                             <div class="grid gap-[10px]">
