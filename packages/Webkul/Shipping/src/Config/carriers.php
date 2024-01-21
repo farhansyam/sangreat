@@ -1,8 +1,10 @@
 <?php
 
+
 return [
     'flatrate' => [
         'code'         => 'flatrate',
+        'icon'         => '',
         'title'        => 'Flat Rate',
         'description'  => 'Flat Rate Shipping',
         'active'       => false,
@@ -13,6 +15,7 @@ return [
 
     'free' => [
         'code'         => 'free',
+        'icon'         => '',
         'title'        => 'Free Shipping',
         'description'  => 'Free Shipping',
         'active'       => false,
@@ -21,6 +24,7 @@ return [
     ],
     'jneekonomi' => [
         'code'         => 'jneekonomi',
+        'icon'         => 'https://deviloarts.com/wp-content/uploads/JNE-Express-Logo-Vector-1536x1087.jpg',
         'title'        => 'JNE EKonomi',
         'description'  => 'JNE EKonomi',
         'active'       => true,
@@ -30,6 +34,7 @@ return [
     ],
     'jneregular' => [
         'code'         => 'jneregular',
+        'icon'         => 'https://deviloarts.com/wp-content/uploads/JNE-Express-Logo-Vector-1536x1087.jpg',
         'title'        => 'JNE Regular',
         'description'  => 'JNE Regular',
         'active'       => true,
@@ -39,6 +44,7 @@ return [
     ],
     'jnespeed' => [
         'code'         => 'jnespeed',
+        'icon'         => 'https://deviloarts.com/wp-content/uploads/JNE-Express-Logo-Vector-1536x1087.jpg',
         'title'        => 'JNE Speed',
         'description'  => 'JNE Speed',
         'active'       => true,
@@ -48,6 +54,7 @@ return [
     ],
     'jneyes' => [
         'code'         => 'jneyes',
+        'icon'         => 'https://deviloarts.com/wp-content/uploads/JNE-Express-Logo-Vector-1536x1087.jpg',
         'title'        => 'JNE YES',
         'description'  => 'JNE YES',
         'active'       => true,
@@ -57,6 +64,7 @@ return [
     ],
     'tikisatu' => [
         'code'         => 'tikisatu',
+        'icon'         => 'https://3.bp.blogspot.com/-sq9MnKqpa9w/WbyeL--KFLI/AAAAAAAAElA/TCVZ4-9olckRE9L40kvVPQPkLoMp8zjdgCEwYBhgL/s1600/LOGO-TIKI.png',
         'title'        => 'TIKI SATU',
         'description'  => 'TIKI SATU',
         'active'       => true,
@@ -66,6 +74,7 @@ return [
     ],
     'tikidua' => [
         'code'         => 'tikidua',
+        'icon'         => 'https://3.bp.blogspot.com/-sq9MnKqpa9w/WbyeL--KFLI/AAAAAAAAElA/TCVZ4-9olckRE9L40kvVPQPkLoMp8zjdgCEwYBhgL/s1600/LOGO-TIKI.png',
         'title'        => 'TIKI dua',
         'description'  => 'TIKI dua',
         'active'       => true,
@@ -75,6 +84,7 @@ return [
     ],
     'tikitiga' => [
         'code'         => 'tikitiga',
+        'icon'         => 'https://3.bp.blogspot.com/-sq9MnKqpa9w/WbyeL--KFLI/AAAAAAAAElA/TCVZ4-9olckRE9L40kvVPQPkLoMp8zjdgCEwYBhgL/s1600/LOGO-TIKI.png',
         'title'        => 'TIKI Tiga',
         'description'  => 'TIKI Tiga',
         'active'       => true,
@@ -84,6 +94,7 @@ return [
     ],
     'possatu' => [
         'code'         => 'possatu',
+        'icon'         => 'https://banner2.cleanpng.com/20180706/pq/kisspng-pos-indonesia-persero-pt-joint-stock-company-ma-vector-peta-indonesia-5b3fd260567700.5007629815309092803542.jpg',
         'title'        => 'POS SAtu',
         'description'  => 'POS Satu',
         'active'       => true,
@@ -93,6 +104,7 @@ return [
     ],
     'posdua' => [
         'code'         => 'posdua',
+        'icon'         => 'https://banner2.cleanpng.com/20180706/pq/kisspng-pos-indonesia-persero-pt-joint-stock-company-ma-vector-peta-indonesia-5b3fd260567700.5007629815309092803542.jpg',
         'title'        => 'POS Dua',
         'description'  => 'POS Dua',
         'active'       => true,
