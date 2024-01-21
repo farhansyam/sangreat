@@ -85,6 +85,8 @@ abstract class Address extends Model implements AddressContract
         'kota',
         'id_provinsi',
         'id_kota',
+        'city_id',
+        'kurir',
     ];
 
     /**
