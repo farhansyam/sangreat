@@ -47,23 +47,14 @@ class JNEYes extends AbstractShipping
 
         $cartShippingRate = new CartShippingRate;
 
-        $citys = Http::withOptions(['verify' => false,])->withHeaders([
-            'key' => env('RAJAONGKIR_API_KEY')
-            ])->get('https://api.rajaongkir.com/starter/city')
-            ->json()['rajaongkir']['results'];
-        foreach($citys as $city){
-            if($city['city_name'] == ucwords(strtolower(trim($cart->billing_address['city'])))){
-                $city_id = $city['city_id'];
-            }
-        }
         $response = Http::withOptions(['verify' => false,])->withHeaders([
-                'key' => env('RAJAONGKIR_API_KEY')
-            ])->post('https://api.rajaongkir.com/starter/cost',[
-                'origin'        => env('RAJAONGKIR_ORIGIN_CODE', 12),
-                'destination'   => $city_id,
-                'weight'        => $cart->all_items[0]['weight'],
-                'courier'       => 'jne',
-            ])
+            'key' => env('RAJAONGKIR_API_KEY')
+        ])->post('https://api.rajaongkir.com/starter/cost',[
+            'origin'        => env('RAJAONGKIR_ORIGIN_CODE', 12),
+            'destination'   => $cart->billing_address->city_id,
+            'weight'        => $cart->all_items[0]['weight'],
+            'courier'       => 'jne',
+        ])
         ->json()['rajaongkir']['results'][0]['costs'];
         if(array_key_exists(3,$response)){
             $cartShippingRate->carrier_title = 'JNE '.$response[3]['service'];
